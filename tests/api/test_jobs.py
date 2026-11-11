@@ -18,6 +18,21 @@ def test_create_and_filter_job(client, app):
     assert client.get("/api/jobs?status=scheduled").status_code == 200
 
 
+def test_update_duration_to_30_minutes(client, app):
+    with app.app_context():
+        db.session.add(Technician(name="Dana"))
+        db.session.commit()
+        technician_id = Technician.query.one().id
+    payload = {
+        "customer_name": "Acme", "description": "Inspection", "technician_id": technician_id,
+        "scheduled_date": "2026-11-09", "start_time": "09:00", "duration_minutes": 60,
+    }
+    created = client.post("/api/jobs", json=payload).get_json()[0]
+    response = client.patch(f"/api/jobs/{created['id']}", json={"duration_minutes": 30})
+    assert response.status_code == 200
+    assert response.get_json()["duration_minutes"] == 30
+
+
 def test_conflict_returns_structured_error(client, app):
     with app.app_context():
         db.session.add(Technician(name="Dana"))
