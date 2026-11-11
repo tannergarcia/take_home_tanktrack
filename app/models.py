@@ -23,6 +23,7 @@ class Job(db.Model):
     start_minute = db.Column(db.Integer, nullable=False)
     duration_minutes = db.Column(db.Integer, nullable=False)
     status = db.Column(db.Enum(JobStatus), nullable=False, default=JobStatus.SCHEDULED, index=True)
+    deleted = db.Column(db.Boolean, nullable=False, default=False, index=True)
     series_id = db.Column(db.String(36))
     series_index = db.Column(db.Integer)
     series_total = db.Column(db.Integer)
