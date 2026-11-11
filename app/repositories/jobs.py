@@ -1,8 +1,10 @@
+from __future__ import annotations
+
+from datetime import date
+
 from sqlalchemy import select
 
 from ..models import Job
-
-from datetime import date
 
 
 class JobRepository:

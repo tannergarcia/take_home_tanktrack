@@ -26,7 +26,7 @@ class TimeSlot:
     def end_minute(self):
         return self.start_minute + self.duration_minutes
 
-    def overlaps(self, other: TimeSlot) -> bool:
+    def overlaps(self, other):
         return (
             self.date == other.date
             and self.start_minute < other.end_minute
